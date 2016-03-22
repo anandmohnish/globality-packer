@@ -48,6 +48,11 @@
       "destination": "{{user `ansible_staging_dir`}}/requirements.yml"
     },
     {
+      "type": "file",
+      "source": "ansible/ansible.cfg",
+      "destination": "{{user `ansible_staging_dir`}}/ansible.cfg"
+    },
+    {
       "type": "shell",
       "inline": [
         "cd {{user `ansible_staging_dir`}}",

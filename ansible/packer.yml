@@ -1,0 +1,13 @@
+---
+
+- name: test
+  hosts: all
+  become: yes
+  become_user: root
+  become_method: sudo
+  roles:
+    - role: kamaln7.swapfile
+      swapfile_size: 1GB
+      swapfile_swappiness: 60
+      swapfile_location: /swapfile
+      tags: ['swapfile']

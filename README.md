@@ -17,7 +17,7 @@ Builds Ubuntu AMIs using Ansible.
 
         eval $(awsenv packer)
 
- 4. Choose a source AMI (e.g. from [https://cloud-images.ubuntu.com/locator/]()):
+ 4. Choose a source AMI (e.g. from [https://cloud-images.ubuntu.com/locator/ec2]()):
 
         export AWS_SOURCE_AMI=ami-df0607b5
 

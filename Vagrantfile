@@ -1,5 +1,5 @@
 nodes = [
-  { :hostname => "packer-ubuntu", :ip => "172.16.0.42", :box => "bento/ubuntu-14.04", :ram => "512", :cpus => 1},
+  { :hostname => "packer-ubuntu", :ip => "172.16.42.42", :box => "bento/ubuntu-14.04", :ram => "512", :cpus => 1},
 ]
 
 Vagrant.configure("2") do |config|

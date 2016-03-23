@@ -5,7 +5,7 @@
     "aws_access_key":  "{{env `AWS_ACCESS_KEY_ID`}}",
     "aws_region": "{{env `AWS_DEFAULT_REGION`}}",
     "aws_secret_key":  "{{env `AWS_SECRET_ACCESS_KEY`}}",
-    "name": "test",
+    "name": "globality",
     "source_ami": "{{env `AWS_SOURCE_AMI`}}",
     "ssh_username": "ubuntu"
   },
@@ -31,9 +31,7 @@
       "type": "shell",
       "execute_command": "{{ .Vars }} sudo -E /bin/bash '{{ .Path }}'",
       "scripts": [
-        "scripts/update_apt.sh",
-        "scripts/install_python.sh",
-        "scripts/install_ansible.sh"
+        "scripts/bootstrap.sh"
       ]
     },
     {
@@ -44,13 +42,8 @@
     },
     {
       "type": "file",
-      "source": "ansible/requirements.yml",
-      "destination": "{{user `ansible_staging_dir`}}/requirements.yml"
-    },
-    {
-      "type": "file",
-      "source": "ansible/ansible.cfg",
-      "destination": "{{user `ansible_staging_dir`}}/ansible.cfg"
+      "source": "ansible/",
+      "destination": "{{user `ansible_staging_dir`}}"
     },
     {
       "type": "shell",
@@ -63,9 +56,43 @@
       "type": "ansible-local",
       "playbook_file": "ansible/packer.yml",
       "extra_arguments": [
-        "-e aws_region={{user `aws_region`}}"
+        "-e aws_region={{user `aws_region`}}",
+	"--tags baseline"
       ],
-      "playbook_dir": "ansible",
+      "staging_directory": "{{user `ansible_staging_dir`}}"
+    },
+    {
+       "type": "shell",
+       "inline": [
+          "sudo reboot",
+          "sleep 60"
+      ]
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "mkdir -p {{user `ansible_staging_dir`}}"
+      ]
+    },
+    {
+      "type": "file",
+      "source": "ansible/",
+      "destination": "{{user `ansible_staging_dir`}}"
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "cd {{user `ansible_staging_dir`}}",
+        "ansible-galaxy install -r requirements.yml -p shared-roles --force"
+      ]
+    },
+    {
+      "type": "ansible-local",
+      "playbook_file": "ansible/packer.yml",
+      "extra_arguments": [
+        "-e aws_region={{user `aws_region`}}",
+	"--tags swapfile,codedeploy,cloudwatch,nginx,python,nodejs"
+      ],
       "staging_directory": "{{user `ansible_staging_dir`}}"
     }
   ]

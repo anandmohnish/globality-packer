@@ -1,0 +1,24 @@
+---
+
+- name: install CloudWatch perl dependencies from apt
+  apt: name={{ item }} state=present
+  with_items:
+    - libcrypt-ssleay-perl
+    - libdatetime-perl
+    - libswitch-perl
+    - libwww-perl
+
+- name: make sure CloudWatch scripts folder exists
+  file: path=~/{{ cloudwatch_scripts_dir }} state=directory
+
+- name: download CloudWatch monitoring scripts
+  get_url: url={{ cloudwatch_scripts_url }} dest=/var/tmp/{{ cloudwatch_scripts_archive }}
+
+- name: unarchive CloudWatch monitoring scripts
+  unarchive: src=/var/tmp/{{ cloudwatch_scripts_archive }} dest=~/ copy=no
+
+- name: remove CloudWatch monitoring scripts archive
+  file: path=/var/tmp/{{ cloudwatch_scripts_archive }} state=absent
+
+- name: install CloudWatch monitoring scripts cron entry
+  cron: name="CloudWatch custom monitoring scripts" minute="*/5" job="~/aws-scripts-mon/mon-put-instance-data.pl --disk-space-util --mem-util --mem-avail --disk-path=/ --from-cron"

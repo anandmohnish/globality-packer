@@ -13,6 +13,7 @@
 - name: install python dependencies from pip
   pip: name={{ item }} state=present
   with_items:
+    - psycopg2
     - supervisor
     - virtualenv
     - virtualenvwrapper

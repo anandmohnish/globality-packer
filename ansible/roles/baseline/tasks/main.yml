@@ -16,6 +16,7 @@
     - iftop
     - iotop
     - jq=1.4-2.1~ubuntu14.04.1
+    - libffi-dev
     - locales
     - members
     - netcat-traditional
@@ -27,11 +28,6 @@
     - unrar
     - unzip
     - vim
-
-- name: install utilities from pip
-  pip: name="{{ item }}" state=present
-  with_items:
-    - httpie
 
 - name: set timezone
   copy: content="{{ timezone }}" dest=/etc/timezone owner=root group=root mode=0644

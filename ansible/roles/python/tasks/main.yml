@@ -11,8 +11,10 @@
     - python-dev
 
 - name: install python dependencies from pip
-  pip: name={{ item }} state=present
+  pip: name={{ item }} state=latest
   with_items:
+    - httpie
+    - ndg-httpsclient
     - psycopg2
     - supervisor
     - virtualenv

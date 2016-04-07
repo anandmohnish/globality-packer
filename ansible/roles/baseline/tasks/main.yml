@@ -54,6 +54,9 @@
 - name: update sshd_config
   lineinfile: dest=/etc/ssh/sshd_config regexp="^MaxStartups" line="MaxStartups 100" state=present
 
+- name: update dhclient
+  copy: src=dhclient.conf dest=/etc/dhcp/dhclient.conf
+
 - name: upgrade kernel
   apt: update_cache=yes name=linux-generic-lts-vivid state=present
   when: ansible_kernel | version_compare("3.18.0", "lt")

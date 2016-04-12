@@ -21,6 +21,7 @@
     - members
     - netcat-traditional
     - ntp
+    - postgresql-client
     - sysstat
     - tcpdump
     - traceroute

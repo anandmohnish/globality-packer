@@ -12,7 +12,7 @@ sudo apt-get -qy update
 sudo apt-get -qy update
 
 echo "Installing python..."
-sudo apt-get install -y python python-dev python-setuptools
+sudo apt-get install -y python python-dev python-setuptools libffi-dev libssl-dev
 
 echo "Installing pip..."
 sudo easy_install pip
@@ -22,7 +22,7 @@ sudo pip install -U setuptools
 sudo pip install -U pip
 
 echo "Installing Ansible..."
-sudo pip install ansible
+sudo pip install 'ansible<2.1.0.0'
 
 echo "Installing git..."
 sudo apt-get install -y git

@@ -17,6 +17,7 @@
     - iotop
     - jq=1.4-2.1~ubuntu14.04.1
     - libffi-dev
+    - libssl-dev
     - locales
     - members
     - netcat-traditional

@@ -34,3 +34,9 @@
 
 - name: make sure pm2 starts on boot
   command: pm2 startup ubuntu
+
+- name: make sure pm2 can rotate logs
+  command: pm2 install pm2-logrotate
+
+- name: make sure pm2 rotates logs
+  command: pm2 set pm2-logrotate:retain 30

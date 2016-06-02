@@ -40,7 +40,9 @@
     dest: /tmp/codedeploy-agent.deb
 
 - name: install the codedeploy-agent
-  apt: deb=/tmp/codedeploy-agent.deb
+  apt:
+    deb: /tmp/codedeploy-agent.deb
+    force: yes
 
 - name: start the codedeploy-agent
   service: name=codedeploy-agent state=started

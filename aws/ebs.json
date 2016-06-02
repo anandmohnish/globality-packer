@@ -90,6 +90,7 @@
       "type": "ansible-local",
       "playbook_file": "ansible/packer.yml",
       "extra_arguments": [
+        "-vvv",
         "-e aws_region={{user `aws_region`}}",
 	"--tags swapfile,codedeploy,cloudwatch,nginx,python,nodejs"
       ],

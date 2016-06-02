@@ -20,7 +20,7 @@ Builds Ubuntu AMIs using Ansible.
  4. Choose a source AMI (e.g. from [https://cloud-images.ubuntu.com/locator/ec2](), searching
     for "trusty us-east-1 hvm:ebs-ssd"):
 
-        export AWS_SOURCE_AMI=ami-2b594f41
+        export AWS_SOURCE_AMI=ami-50759d3d
 
 ## Usage
 

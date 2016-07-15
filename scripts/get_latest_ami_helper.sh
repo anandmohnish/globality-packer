@@ -12,4 +12,4 @@ OWNER_ID=099720109477
 aws ec2 describe-images \
     --region $REGION \
     --filter Name=owner-id,Values=$OWNER_ID \
-    --query 'Images[? starts_with(ImageLocation, `099720109477/ubuntu/images/hvm-ssd/ubuntu-trusty-14.04-amd64-server`)] | sort_by(@, & ImageLocation) | [-1] | ImageId'  --out text
+    --query "Images[? starts_with(ImageLocation, \`$OWNER_ID/ubuntu/images/hvm-ssd/ubuntu-trusty-14.04-amd64-server\`)] | sort_by(@, & ImageLocation) | [-1] | ImageId"  --out text

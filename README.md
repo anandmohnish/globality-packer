@@ -21,6 +21,10 @@ Builds Ubuntu AMIs using Ansible.
     for "trusty us-east-1 hvm:ebs-ssd"):
 
         export AWS_SOURCE_AMI=ami-50759d3d
+    
+    or use our helper script which basically does the same thing:
+        
+        export AWS_SOURCE_AMI=$(./get_latest_ami_helper.sh)
 
 ## Usage
 

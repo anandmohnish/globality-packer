@@ -17,10 +17,9 @@ Builds Ubuntu AMIs using Ansible.
 
         eval $(awsenv packer)
 
- 4. Choose a source AMI (e.g. from [https://cloud-images.ubuntu.com/locator/ec2](), searching
-    for "trusty us-east-1 hvm:ebs-ssd"):
-
-        export AWS_SOURCE_AMI=ami-50759d3d
+ 4. Use our helper script to select the latest offical Ubuntu trusty AMI:
+        
+        export AWS_SOURCE_AMI=$(./scripts/get_latest_ami_helper.sh)
 
 ## Usage
 

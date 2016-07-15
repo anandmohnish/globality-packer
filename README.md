@@ -24,7 +24,7 @@ Builds Ubuntu AMIs using Ansible.
     
     or use our helper script which basically does the same thing:
         
-        export AWS_SOURCE_AMI=$(./get_latest_ami_helper.sh)
+        export AWS_SOURCE_AMI=$(./scripts/get_latest_ami_helper.sh)
 
 ## Usage
 

@@ -27,8 +27,10 @@
       tags: ["aws", "codedeploy"]
     - role: cloudwatch
       tags: ["aws", "cloudwatch"]
-    - role: nginx
-      tags: ["nginx"]
+    # - role: nginx
+    #   tags: ["nginx"]
+    - role: openresty
+      tags: ["openresty"]
     - role: python
       tags: ["python"]
     - role: nodejs

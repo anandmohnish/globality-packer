@@ -1,0 +1,84 @@
+---
+
+### Build and deploy (./configure, make, make install) ###
+
+# There is no "latest" on https://openresty.org/en/download.html
+# This should probably be somewhere more global and appropriate
+# openresty_version: 1.9.15.1
+
+
+# First verify if we have to do any of the software build parts
+- name: check existence of OpenResty bins
+  # grep will cause the play to fail so we use numeric evaluation instead of boolean
+  # This will produce either 1 or 0, but only after a fantastic stderr redirect hack
+  # because 'nginx -v' defaults to stderr!
+  shell: "/usr/local/openresty/nginx/sbin/nginx -v 2>&1 | grep -c {{ openresty_version }} || true"
+  register: openresty_exists_result
+
+- debug: msg="{{ openresty_exists_result }}"
+
+# Get build-essentials - packages required for compilation
+- name: get build prerequisites
+  apt: pkg="{{ item }}" state=latest update-cache=yes install_recommends=no
+  with_items:
+    - libreadline-dev 
+    - libncurses5-dev 
+    - libpcre3-dev
+    - libssl-dev 
+    - perl 
+    - make 
+    - build-essential
+  when: openresty_exists_result.stdout != "1"
+
+# Get latest version of OpenResty source code and unpack it
+- name: create temporary directory for unpacking tarball
+  file: path=/tmp/openresty state=directory
+  when: openresty_exists_result.stdout != "1"
+
+- name: download openresty tarball and unpack
+  unarchive: src="https://openresty.org/download/openresty-{{ openresty_version }}.tar.gz" dest=/tmp/openresty copy=no
+  when: openresty_exists_result.stdout != "1"
+
+- name: build openresty
+  shell: "{{ item }}"
+  args:
+    chdir: /tmp/openresty/openresty-"{{ openresty_version }}"
+  with_items:
+    - ./configure
+    - make
+    - make install
+  when: openresty_exists_result.stdout != "1"
+
+### Deploy config ###
+
+- name: push nginx configuration
+  copy: src=nginx.conf dest=/usr/local/openresty/nginx/conf/nginx.conf
+  # BRING ME BACK WHEN YOU HAVE AN INIT SCRIPT AND HANDLER
+  # notify:
+  #   - restart nginx
+
+# This is required because we deploy services expected vanilla nginx
+- name: create config dirs for upstream nginx compatibility
+  file: path="{{ item }}" 
+  args:
+    state: directory
+    owner: root
+    group: root
+    recurse: yes
+  with_items:
+    - /etc/nginx/conf.d
+    - /etc/nginx/sites-enabled
+    # This one is for hostname.txt
+    - /usr/local/openresty/nginx/html/hostname
+
+
+- name: update hostname.txt
+  copy:
+    content={{ inventory_hostname }}
+    dest=/usr/local/openresty/nginx/html/hostname/hostname.txt
+    owner=root
+    group=root
+    mode=644
+  # BRING ME BACK WHEN YOU HAVE AN INIT SCRIPT AND HANDLER
+  # notify:
+  #   - restart nginx

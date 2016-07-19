@@ -62,6 +62,13 @@
     mode: 0644
     src: nginx_logrotate
 
+# Add nginx-jwt scripts to OpenResty to support Auth0 handling
+- name: create dir for lua scripts
+  file: path=/usr/local/openresty/nginx-jwt state=directory mode=0755
+
+- name: get nginx-jwt scripts
+  unarchive: src="https://github.com/auth0/nginx-jwt/releases/download/v1.0.1/nginx-jwt.tar.gz" dest=/usr/local/openresty/nginx-jwt copy=no
+
 ### Deploy config ###
 
 - name: push nginx configuration

@@ -40,7 +40,7 @@
 - name: build openresty
   shell: "{{ item }}"
   args:
-    chdir: /tmp/openresty/openresty-"{{ openresty_version }}"
+    chdir: "/tmp/openresty/openresty-{{ openresty_version }}"
   with_items:
     - ./configure
     - make

@@ -2,7 +2,7 @@
 
 ### Startup script for OpenResty, adapted from nginx default
 ### as packaged by upstream Ubuntu Trusty
-### Deployed by Ansible by 'globality-packer' repo, 'openresty' role
+### Deployed by Ansible 'openresty' role
 ### Destination: /etc/init.d/openresty (Mode: 0755)
 
 ### BEGIN INIT INFO

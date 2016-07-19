@@ -92,7 +92,7 @@
       "extra_arguments": [
         "-vvv",
         "-e aws_region={{user `aws_region`}}",
-	"--tags swapfile,codedeploy,cloudwatch,nginx,python,nodejs"
+	"--tags swapfile,codedeploy,cloudwatch,openresty,python,nodejs"
       ],
       "staging_directory": "{{user `ansible_staging_dir`}}"
     }

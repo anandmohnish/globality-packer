@@ -1,0 +1,4 @@
+---
+
+# There is no "latest" on https://openresty.org/en/download.html
+openresty_version: 1.9.15.1

@@ -42,6 +42,7 @@
 - name: install the codedeploy-agent
   apt:
     deb: /tmp/codedeploy-agent.deb
+    update_cache: yes
     force: yes
 
 - name: start the codedeploy-agent

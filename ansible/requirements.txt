@@ -1,0 +1,6 @@
+# ansible version limit is required because otherwise
+# diff['prepared'] fails when deploying codedeploy-agent from deb file
+# the same limitation is defined in bootstrap.sh
+ansible<2.1.0.0
+awsenv>=1.10
+boto3>=1.3.0

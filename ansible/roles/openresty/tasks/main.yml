@@ -1,0 +1,105 @@
+---
+
+### Build and deploy (./configure, make, make install) ###
+
+# There is no "latest" on https://openresty.org/en/download.html
+# This should probably be somewhere more global and appropriate
+# openresty_version: 1.9.15.1
+
+
+# First verify if we have to do any of the software build parts
+- name: check existence of OpenResty bins
+  # grep will cause the play to fail so we use numeric evaluation instead of boolean
+  # This will produce either 1 or 0, but only after a fantastic stderr redirect hack
+  # because 'nginx -v' defaults to stderr!
+  shell: "/usr/local/openresty/nginx/sbin/nginx -v 2>&1 | grep -c {{ openresty_version }} || true"
+  register: openresty_exists_result
+
+# Get build-essentials - packages required for compilation
+- name: get build prerequisites
+  apt: pkg="{{ item }}" state=latest update-cache=yes install_recommends=no
+  with_items:
+    - libreadline-dev 
+    - libncurses5-dev 
+    - libpcre3-dev
+    - libssl-dev 
+    - perl 
+    - make 
+    - build-essential
+  when: openresty_exists_result.stdout != "1"
+
+# Get latest version of OpenResty source code and unpack it
+- name: create temporary directory for unpacking tarball
+  file: path=/tmp/openresty state=directory
+  when: openresty_exists_result.stdout != "1"
+
+- name: download openresty tarball and unpack
+  unarchive: src="https://openresty.org/download/openresty-{{ openresty_version }}.tar.gz" dest=/tmp/openresty copy=no
+  when: openresty_exists_result.stdout != "1"
+
+- name: build openresty
+  shell: "{{ item }}"
+  args:
+    chdir: "/tmp/openresty/openresty-{{ openresty_version }}"
+  with_items:
+    - ./configure
+    - make
+    - make install
+  when: openresty_exists_result.stdout != "1"
+
+- name: deploy init script
+  copy: dest=/etc/init.d/nginx
+  args:
+    mode: 0755
+    src: nginx_init
+
+- name: make openresty nginx run by default
+  shell: "update-rc.d nginx defaults"
+
+- name: deploy logrorate config
+  copy: dest=/etc/logrotate.d/nginx
+  args:
+    mode: 0644
+    src: nginx_logrotate
+
+# Add nginx-jwt scripts to OpenResty to support Auth0 handling
+- name: create dir for lua scripts
+  file: path=/usr/local/openresty/nginx-jwt state=directory mode=0755
+
+- name: get nginx-jwt scripts
+  unarchive: dest="/usr/local/openresty/nginx-jwt"
+  args:
+    src: "https://github.com/auth0/nginx-jwt/releases/download/v1.0.1/nginx-jwt.tar.gz"
+    copy: no
+    owner: root
+    group: root
+
+### Deploy config ###
+
+- name: push nginx configuration
+  copy: src=nginx.conf dest=/usr/local/openresty/nginx/conf/nginx.conf
+  notify:
+    - restart nginx
+
+# Services expect vanilla nginx
+- name: create config dirs for upstream nginx compatibility
+  file: path="{{ item }}" 
+  args:
+    state: directory
+    owner: root
+    group: root
+    recurse: yes
+  with_items:
+    - /etc/nginx/conf.d
+    - /etc/nginx/sites-enabled
+    # This one is for hostname.txt
+    - /usr/local/openresty/nginx/html/hostname
+
+# Hostname file used for service health checks
+- name: update hostname.txt
+  copy: dest=/usr/local/openresty/nginx/html/hostname/hostname.txt
+  args:
+    content: "{{ inventory_hostname }}"
+    owner: root
+    group: root
+    mode: 0644

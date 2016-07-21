@@ -93,10 +93,18 @@
     group: root
     recurse: yes
   with_items:
+    - /var/log/nginx
     - /etc/nginx/conf.d
     - /etc/nginx/sites-enabled
     # This one is for hostname.txt
     - /usr/local/openresty/nginx/html/hostname
+
+# This is required for our services that rely on this location
+- name: create symlink for uwsgi_params
+  file: path="/etc/nginx/uwsgi_params"
+  args:
+    state: link
+    src: "/usr/local/openresty/nginx/conf/uwsgi_params"
 
 # Hostname file used for service health checks
 - name: update hostname.txt

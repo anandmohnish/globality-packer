@@ -1,4 +1,4 @@
-/usr/local/openresty/nginx/logs/*.log {
+/var/log/nginx/*.log {
     weekly
     missingok
     rotate 52

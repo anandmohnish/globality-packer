@@ -8,7 +8,7 @@
 
 - name: add nodesource repo
   apt_repository:
-    repo="deb http://deb.nodesource.com/node_5.x trusty main"
+    repo="deb http://deb.nodesource.com/node_6.x trusty main"
     state=present
     update_cache=yes
 

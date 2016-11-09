@@ -57,7 +57,7 @@
       "playbook_file": "ansible/packer.yml",
       "extra_arguments": [
         "-e aws_region={{user `aws_region`}}",
-	"--tags baseline"
+        "--tags baseline"
       ],
       "staging_directory": "{{user `ansible_staging_dir`}}"
     },
@@ -92,7 +92,7 @@
       "extra_arguments": [
         "-vvv",
         "-e aws_region={{user `aws_region`}}",
-	"--tags swapfile,codedeploy,cloudwatch,openresty,python,nodejs"
+        "--tags swapfile,codedeploy,cloudwatch,openresty,python,nodejs"
       ],
       "staging_directory": "{{user `ansible_staging_dir`}}"
     }

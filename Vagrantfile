@@ -26,7 +26,6 @@ Vagrant.configure("2") do |config|
         vb.memory = node[:ram]
         vb.cpus = node[:cpus]
         vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-        vb.customize ["modifyvm", :id, "--audio", "none"]
         vb.customize ["guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", 10000]
       end
     end

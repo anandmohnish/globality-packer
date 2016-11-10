@@ -1,5 +1,16 @@
 nodes = [
-  { :hostname => "packer-ubuntu", :ip => "172.16.42.42", :box => "bento/ubuntu-14.04", :ram => "512", :cpus => 1},
+  { :hostname => "packer-ubuntu-14.04",
+    :ip => "172.16.42.42",
+    :box => "bento/ubuntu-14.04",
+    :ram => "512",
+    :cpus => 1
+  },
+  { :hostname => "packer-ubuntu-16.04",
+    :ip => "172.16.42.44",
+    :box => "bento/ubuntu-16.04",
+    :ram => "512",
+    :cpus => 1
+  }
 ]
 
 Vagrant.configure("2") do |config|
@@ -7,7 +18,7 @@ Vagrant.configure("2") do |config|
   config.ssh.insert_key = false
 
   nodes.each do |node|
-    config.vm.define node[:hostname] do |node_config|
+    config.vm.define node[:hostname], autostart: false do |node_config|
       node_config.vm.box = node[:box]
       node_config.vm.hostname = node[:hostname]
       node_config.vm.network :private_network, ip: node[:ip]

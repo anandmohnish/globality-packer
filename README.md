@@ -41,9 +41,9 @@ Builds Ubuntu AMIs using Ansible.
 
 To test Ansible using Vagrant.
 
- 1. Bring up the vagrant instance.
+ 1. Choose an OS version, and bring up the vagrant instance.
 
-        vagrant up
+        vagrant up packer-ubuntu-<16.04|14.04>
 
  2. Change to the Ansible directory:
 

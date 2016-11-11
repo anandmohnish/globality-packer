@@ -1,11 +1,11 @@
 nodes = [
-  { :hostname => "packer-ubuntu-14.04",
+  { :hostname => "packer-ubuntu-trusty",
     :ip => "172.16.42.42",
     :box => "bento/ubuntu-14.04",
     :ram => "512",
     :cpus => 1
   },
-  { :hostname => "packer-ubuntu-16.04",
+  { :hostname => "packer-ubuntu-xenial",
     :ip => "172.16.42.44",
     :box => "bento/ubuntu-16.04",
     :ram => "512",

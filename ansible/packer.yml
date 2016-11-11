@@ -5,18 +5,18 @@
   tasks:
     - name: copy bootstrap script
       copy:
-        src: "{{ playbook_dir }}/../scripts/bootstrap.sh"
-        dest: /tmp
+        src: "{{ playbook_dir }}/../scripts/bootstrap-{{ ansible_lsb['codename'] }}.sh"
+        dest: /tmp/bootstrap.sh
         mode: 0755
       tags: ["bootstrap"]
     - name: run bootstrap script
       command: /tmp/bootstrap.sh
       tags: ["bootstrap"]
 
-- name: install host
-  hosts: all
+- name: install host (trusty)
+  hosts: trusty
   roles:
-    - role: baseline
+    - role: baseline-trusty
       tags: ["baseline"]
     - role: kamaln7.swapfile
       swapfile_size: 1GB
@@ -33,5 +33,22 @@
       tags: ["python"]
     - role: nodejs
       tags: ["nodejs"]
+  vars:
+    aws_region: us-east-1
+
+- name: install host (trusty)
+  hosts: xenial
+  roles:
+    - role: baseline-xenial
+      tags: ["baseline"]
+    - role: kamaln7.swapfile
+      swapfile_size: 1GB
+      swapfile_swappiness: 60
+      swapfile_location: /swapfile
+      tags: ["swapfile"]
+    - role: codedeploy
+      tags: ["aws", "codedeploy"]
+    - role: cloudwatch
+      tags: ["aws", "cloudwatch"]
   vars:
     aws_region: us-east-1

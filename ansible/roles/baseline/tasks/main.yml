@@ -2,33 +2,19 @@
 
 - name: add backports repo
   apt_repository:
-    repo="deb http://archive.ubuntu.com/ubuntu xenial-backports main restricted universe multiverse"
+    repo="deb http://archive.ubuntu.com/ubuntu {{ ansible_lsb["codename"] }}-backports main restricted universe multiverse"
     state=present
     update_cache=yes
 
-- name: install utilities from apt
+- name: install utilities from apt (trusty)
   apt: name="{{ item }}" state=present
-  with_items:
-    - ack-grep
-    - curl
-    - emacs24-nox
-    - htop
-    - httpie
-    - iftop
-    - iotop
-    - jq
-    - libffi-dev
-    - libssl-dev
-    - locales
-    - members
-    - netcat-traditional
-    - ntp
-    - sysstat
-    - tcpdump
-    - traceroute
-    - tree
-    - unzip
-    - vim
+  with_items: "{{ trusty_packages }}"
+  when: ansible_lsb["codename"] == "trusty"
+
+- name: install utilities from apt (xenial)
+  apt: name="{{ item }}" state=present
+  with_items: "{{ xenial_packages }}"
+  when: ansible_lsb["codename"] == "xenial"
 
 - name: set timezone
   copy: content="{{ timezone }}" dest=/etc/timezone owner=root group=root mode=0644
@@ -57,3 +43,9 @@
 
 - name: update dhclient
   copy: src=dhclient.conf dest=/etc/dhcp/dhclient.conf
+  when: ansible_lsb["codename"] == "trusty"
+
+- name: upgrade kernel
+  apt: update_cache=yes name=linux-generic-lts-vivid state=present
+  when: ansible_kernel | version_compare("3.18.0", "lt")
+  register: upgrade_kernel

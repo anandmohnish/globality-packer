@@ -21,7 +21,7 @@ Builds Ubuntu AMIs using Ansible.
         
         export AWS_SOURCE_AMI=$(./scripts/get_latest_ami_helper.sh <version>)
 
-    _Where `version` is either **`xenial`**_ (16.04) or **`trusty`** (14.04)_
+    _Where `version` is either **`xenial`** (16.04) or **`trusty`** (14.04)_
 
 ## Usage
 

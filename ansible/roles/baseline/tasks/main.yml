@@ -6,15 +6,9 @@
     state=present
     update_cache=yes
 
-- name: install utilities from apt (trusty)
+- name: install utilities from apt
   apt: name="{{ item }}" state=present
-  with_items: "{{ trusty_packages }}"
-  when: ansible_lsb["codename"] == "trusty"
-
-- name: install utilities from apt (xenial)
-  apt: name="{{ item }}" state=present
-  with_items: "{{ xenial_packages }}"
-  when: ansible_lsb["codename"] == "xenial"
+  with_items: "{{ apt_packages }}"
 
 - name: set timezone
   copy: content="{{ timezone }}" dest=/etc/timezone owner=root group=root mode=0644

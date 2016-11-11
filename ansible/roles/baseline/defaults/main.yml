@@ -2,48 +2,4 @@
 
 locale: en_US.UTF-8
 timezone: "America/Los_Angeles"
-
-trusty_packages:
-  - ack-grep
-  - curl
-  - emacs24-nox
-  - htop
-  - iftop
-  - iotop
-  - jq=1.4-2.1~ubuntu14.04.1
-  - libffi-dev
-  - libssl-dev
-  - locales
-  - members
-  - netcat-traditional
-  - ntp
-  - postgresql-client
-  - sysstat
-  - tcpdump
-  - traceroute
-  - tree
-  - unrar
-  - unzip
-  - vim
-
-xenial_packages:
-  - ack-grep
-  - curl
-  - emacs24-nox
-  - htop
-  - httpie
-  - iftop
-  - iotop
-  - jq
-  - libffi-dev
-  - libssl-dev
-  - locales
-  - members
-  - netcat-traditional
-  - ntp
-  - sysstat
-  - tcpdump
-  - traceroute
-  - tree
-  - unzip
-  - vim
+apt_packages: []

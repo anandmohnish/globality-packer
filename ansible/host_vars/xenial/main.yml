@@ -1,0 +1,23 @@
+---
+
+apt_packages:
+  - ack-grep
+  - curl
+  - emacs24-nox
+  - htop
+  - httpie
+  - iftop
+  - iotop
+  - jq
+  - libffi-dev
+  - libssl-dev
+  - locales
+  - members
+  - netcat-traditional
+  - ntp
+  - sysstat
+  - tcpdump
+  - traceroute
+  - tree
+  - unzip
+  - vim

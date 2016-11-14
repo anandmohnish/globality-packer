@@ -21,7 +21,7 @@ Builds Ubuntu AMIs using Ansible.
         
         export AWS_SOURCE_AMI=$(./scripts/get_latest_ami_helper.sh <version>)
 
-    _Where `version` is either **`16.04`** or **`14.04`**_
+    _Where `version` is either **`xenial`** (16.04) or **`trusty`** (14.04)_
 
 ## Usage
 
@@ -41,9 +41,18 @@ Builds Ubuntu AMIs using Ansible.
 
 To test Ansible using Vagrant.
 
+ 0. _Only required once per virtualenv_
+
+        mkvirtualenv packer-<xenial|trusty>
+        pip install -r requirements-<xenial|trusty>.txt
+
+    From then on before you want to use Ansible:
+    
+        workon packer-<xenial|trusty>
+
  1. Choose an OS version, and bring up the vagrant instance.
 
-        vagrant up packer-ubuntu-<16.04|14.04>
+        vagrant up packer-ubuntu-<xenial|trusty>
 
  2. Change to the Ansible directory:
 
@@ -55,4 +64,4 @@ To test Ansible using Vagrant.
 
  4. Run Ansible:
 
-        ansible-playbook -i inventory/vagrant packer.yml
+        ansible-playbook -i inventory/vagrant packer.yml -l <xenial|trusty>

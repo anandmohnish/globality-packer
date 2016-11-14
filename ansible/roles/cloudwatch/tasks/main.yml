@@ -11,8 +11,9 @@
 - name: make sure CloudWatch scripts folder exists
   file: path=~/{{ cloudwatch_scripts_dir }} state=directory
 
+  # This URL is fairly unreliable and download will fail on occasion
 - name: download CloudWatch monitoring scripts
-  get_url: url={{ cloudwatch_scripts_url }} dest=/var/tmp/{{ cloudwatch_scripts_archive }}
+  get_url: url={{ cloudwatch_scripts_url }} dest=/var/tmp/{{ cloudwatch_scripts_archive }} tmp_dest=/tmp
 
 - name: unarchive CloudWatch monitoring scripts
   unarchive: src=/var/tmp/{{ cloudwatch_scripts_archive }} dest=~/ copy=no

@@ -10,7 +10,7 @@ REGION=us-east-1
 OWNER_ID=099720109477
 
 usage(){
-    echo "USAGE: ./$0  [16.04|14.04]"
+    echo "USAGE: ./$0  [trusty|xenial]"
     exit 1
 }
 
@@ -18,9 +18,9 @@ if [[ $# -ne 1 ]]; then
 	usage
 fi
 
-if [[ $1 == "16.04" ]]; then
+if [[ $1 == "xenial" ]]; then
 	UBUNTU_VERSION="xenial-16.04"
-elif [[ $1 == "14.04" ]]; then
+elif [[ $1 == "trusty" ]]; then
 	UBUNTU_VERSION="trusty-14.04"
 else
 	usage

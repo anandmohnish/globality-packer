@@ -5,15 +5,15 @@
   tasks:
     - name: copy bootstrap script
       copy:
-        src: "{{ playbook_dir }}/../scripts/bootstrap.sh"
-        dest: /tmp
+        src: "{{ playbook_dir }}/../scripts/bootstrap-{{ ansible_lsb['codename'] }}.sh"
+        dest: /tmp/bootstrap.sh
         mode: 0755
       tags: ["bootstrap"]
     - name: run bootstrap script
       command: /tmp/bootstrap.sh
       tags: ["bootstrap"]
 
-- name: install host
+- name: install host (all)
   hosts: all
   roles:
     - role: baseline
@@ -27,6 +27,12 @@
       tags: ["aws", "codedeploy"]
     - role: cloudwatch
       tags: ["aws", "cloudwatch"]
+  vars:
+    aws_region: us-east-1
+
+- name: install host (trusty)
+  hosts: trusty
+  roles:
     - role: openresty
       tags: ["openresty"]
     - role: python

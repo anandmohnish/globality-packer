@@ -19,7 +19,8 @@ Builds Ubuntu AMIs using Ansible.
 
  4. Use our helper script to select the latest offical Ubuntu trusty AMI:
         
-        export AWS_SOURCE_AMI=$(./scripts/get_latest_ami_helper.sh <version>)
+        export UBUNTU_VERSION=<version>
+        export AWS_SOURCE_AMI=$(./scripts/get_latest_ami_helper.sh)
 
     _Where `version` is either **`xenial`** (16.04) or **`trusty`** (14.04)_
 

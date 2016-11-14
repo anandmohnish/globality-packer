@@ -10,11 +10,11 @@ REGION=us-east-1
 OWNER_ID=099720109477
 
 usage(){
-    echo "USAGE: ./$0  [trusty|xenial]"
+    echo "Environment variable UBUNTU_VERSION not set, quitting!"
     exit 1
 }
 
-if [[ $# -ne 1 ]]; then
+if [[ -z $UBUNTU_VERSION ]]; then
 	usage
 fi
 

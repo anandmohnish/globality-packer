@@ -7,7 +7,8 @@
     "aws_secret_key":  "{{env `AWS_SECRET_ACCESS_KEY`}}",
     "name": "globality",
     "source_ami": "{{env `AWS_SOURCE_AMI`}}",
-    "ssh_username": "ubuntu"
+    "ssh_username": "ubuntu",
+    "ubuntu_version": "{{env `UBUNTU_VERSION` }}"
   },
   "builders": [
     {
@@ -20,7 +21,7 @@
       "ssh_username": "{{user `ssh_username`}}",
       "ssh_timeout": "10m",
       "ami_groups": ["all"],
-      "ami_name": "{{user `name`}}.{{user `aws_region`}}.{{timestamp}}",
+      "ami_name": "{{user `name`}}.{{user `aws_region`}}.{{user `ubuntu_version`}}.{{timestamp}}",
       "ami_description": "{{user `name`}} AMI ({{user `aws_region`}})",
       "run_tags": { "ami-create": "{{user `name`}}.{{user `aws_region`}}" },
       "tags": { "ami": "{{user `name`}}.{{user `aws_region`}}" }

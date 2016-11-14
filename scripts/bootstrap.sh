@@ -7,12 +7,12 @@
 #  - Install Ansible and git
 
 usage(){
-    echo "USAGE: ./$0  [trusty|xenial]"
+    echo "Environment variable UBUNTU_VERSION not set, quitting!"
     exit 1
 }
 
-if [[ $# -ne 1 ]]; then
-    usage
+if [[ -z $UBUNTU_VERSION ]]; then
+	usage
 fi
 
 echo "Updating apt..."
@@ -31,9 +31,9 @@ sudo pip install -U setuptools
 sudo pip install -U pip
 
 echo "Installing Ansible..."
-if [[ $1 == "trusty" ]]; then
+if [[ $UBUNTU_VERSION == "trusty" ]]; then
 	sudo pip install 'ansible<2.1.0.0'
-elif [[ $1 == "xenial" ]]; then
+elif [[ $UBUNTU_VERSION == "xenial" ]]; then
 	sudo pip install ansible
 else
 	echo "Couldn't install Ansible"

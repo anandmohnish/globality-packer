@@ -6,6 +6,15 @@
 #  - Installs Python and pip
 #  - Install Ansible and git
 
+usage(){
+    echo "USAGE: ./$0  [trusty|xenial]"
+    exit 1
+}
+
+if [[ $# -ne 1 ]]; then
+    usage
+fi
+
 echo "Updating apt..."
 # apt-get update will fail intermittently during EBS builds; running this twice seems to work
 sudo apt-get -qy update
@@ -22,7 +31,13 @@ sudo pip install -U setuptools
 sudo pip install -U pip
 
 echo "Installing Ansible..."
-sudo pip install 'ansible<2.1.0.0'
+if [[ $1 == "trusty" ]]; then
+	sudo pip install 'ansible<2.1.0.0'
+elif [[ $1 == "xenial" ]]; then
+	sudo pip install ansible
+else
+	echo "Couldn't install Ansible"
+fi
 
 echo "Installing git..."
 sudo apt-get install -y git

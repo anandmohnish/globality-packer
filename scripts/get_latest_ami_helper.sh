@@ -18,10 +18,10 @@ if [[ -z $UBUNTU_VERSION ]]; then
 	usage
 fi
 
-if [[ $1 == "xenial" ]]; then
-	UBUNTU_VERSION="xenial-16.04"
-elif [[ $1 == "trusty" ]]; then
-	UBUNTU_VERSION="trusty-14.04"
+if [[ $UBUNTU_VERSION == "xenial" ]]; then
+	version="xenial-16.04"
+elif [[ $UBUNTU_VERSION == "trusty" ]]; then
+	version="trusty-14.04"
 else
 	usage
 fi
@@ -29,4 +29,4 @@ fi
 aws ec2 describe-images \
     --region $REGION \
     --filter Name=owner-id,Values=$OWNER_ID \
-    --query "Images[? starts_with(ImageLocation, \`$OWNER_ID/ubuntu/images/hvm-ssd/ubuntu-$UBUNTU_VERSION-amd64-server\`)] | sort_by(@, & ImageLocation) | [-1] | ImageId"  --out text
+    --query "Images[? starts_with(ImageLocation, \`$OWNER_ID/ubuntu/images/hvm-ssd/ubuntu-${version}-amd64-server\`)] | sort_by(@, & ImageLocation) | [-1] | ImageId"  --out text

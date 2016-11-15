@@ -25,7 +25,12 @@
       tags: ["swapfile"]
     - role: codedeploy
       tags: ["aws", "codedeploy"]
-      # Following roles should apply only to trusty machines
+  vars:
+    aws_region: us-east-1
+
+- name: install host (trusty)
+  hosts: trusty
+  roles:
     - role: openresty
       tags: ["openresty"]
     - role: python

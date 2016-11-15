@@ -55,14 +55,10 @@ To test Ansible using Vagrant.
 
         vagrant up packer-ubuntu-<xenial|trusty>
 
- 2. Change to the Ansible directory:
-
-        cd ansible
-
- 3. Pull the Ansible Galaxy roles:
+ 2. Pull the Ansible Galaxy roles:
 
         ansible-galaxy install -r requirements.yml -p shared-roles --force
 
- 4. Run Ansible:
+ 3. Run Ansible:
 
         ansible-playbook -i inventory/vagrant packer.yml -l <xenial|trusty>

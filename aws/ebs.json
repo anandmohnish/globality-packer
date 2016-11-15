@@ -1,7 +1,6 @@
 {
   "_comment": "Builds an EBS-based AMI.",
   "variables": {
-    "ansible_staging_dir": "/tmp/ansible-staging.{{timestamp}}",
     "aws_access_key":  "{{env `AWS_ACCESS_KEY_ID`}}",
     "aws_region": "{{env `AWS_DEFAULT_REGION`}}",
     "aws_secret_key":  "{{env `AWS_SECRET_ACCESS_KEY`}}",
@@ -30,72 +29,20 @@
   "provisioners": [
     {
       "type": "shell",
+      "environment_vars": "UBUNTU_VERSION={{user `ubuntu_version`}}",
       "execute_command": "{{ .Vars }} sudo -E /bin/bash '{{ .Path }}'",
       "scripts": [
         "scripts/bootstrap.sh"
       ]
     },
     {
-      "type": "shell",
-      "inline": [
-        "mkdir -p {{user `ansible_staging_dir`}}"
-      ]
-    },
-    {
-      "type": "file",
-      "source": "ansible/",
-      "destination": "{{user `ansible_staging_dir`}}"
-    },
-    {
-      "type": "shell",
-      "inline": [
-        "cd {{user `ansible_staging_dir`}}",
-        "ansible-galaxy install -r requirements.yml -p shared-roles --force"
-      ]
-    },
-    {
-      "type": "ansible-local",
-      "playbook_file": "ansible/packer.yml",
-      "extra_arguments": [
-        "-e aws_region={{user `aws_region`}}",
-        "--tags baseline"
-      ],
-      "staging_directory": "{{user `ansible_staging_dir`}}"
-    },
-    {
-       "type": "shell",
-       "inline": [
-          "sudo reboot",
-          "sleep 60"
-      ]
-    },
-    {
-      "type": "shell",
-      "inline": [
-        "mkdir -p {{user `ansible_staging_dir`}}"
-      ]
-    },
-    {
-      "type": "file",
-      "source": "ansible/",
-      "destination": "{{user `ansible_staging_dir`}}"
-    },
-    {
-      "type": "shell",
-      "inline": [
-        "cd {{user `ansible_staging_dir`}}",
-        "ansible-galaxy install -r requirements.yml -p shared-roles --force"
-      ]
-    },
-    {
-      "type": "ansible-local",
-      "playbook_file": "ansible/packer.yml",
+      "type": "ansible",
+      "host_alias": "{{ user `ubuntu_version` }}",
+      "playbook_file": "./packer.yml",
       "extra_arguments": [
         "-vvv",
-        "-e aws_region={{user `aws_region`}}",
-        "--tags swapfile,codedeploy,cloudwatch,openresty,python,nodejs"
-      ],
-      "staging_directory": "{{user `ansible_staging_dir`}}"
+        "-e aws_region={{user `aws_region`}}"
+      ]
     }
   ]
 }

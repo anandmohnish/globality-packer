@@ -1,0 +1,5 @@
+---
+
+- include: trusty.yml
+  when: ansible_lsb["codename"] == "trusty"
+

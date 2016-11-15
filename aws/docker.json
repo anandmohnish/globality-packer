@@ -1,0 +1,9 @@
+{
+  "description": "Docker enabled with AWS ECS agent - based on Ubuntu {{user `ubuntu_version`}}",
+  "_comment": "Builds an EBS-based AMI.",
+  "builders": [
+    {
+      "ami_name": "{{user `name`}}-ECS-Docker-host-{{user `ubuntu_version`}}-{{user `create_time`}}",
+      "ami_description": "{{user `name`}}-ECS-Docker-host, based on Ubuntu {{user `ubuntu_version`}} with AMI {{user `source_ami`}}, created on {{user `create_time`}}",
+      "run_tags": { "ami-create": "{{user `name`}}.{{user `aws_region`}}" },
+      "tags": { "ami": "{{user `name`}}.{{user `aws_region`}}" },

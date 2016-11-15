@@ -26,13 +26,15 @@ Builds Ubuntu AMIs using Ansible.
 
 ## Usage
 
+_Note: the order of the concatenated json files is important!_
+
  1. Validate:
 
-        packer validate aws/ebs.json
+        cat aws/<openresty|docker>.json aws/ebs.json | packer validate -
 
  2. Build:
 
-        packer build aws/ebs.json
+        cat aws/<openresty|docker>.json aws/ebs.json | packer build -
 
  3. If you are happy with the AMI, make it public/visible in the AWS Console
     If not, delete it and its snapshot in the AWS Console

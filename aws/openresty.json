@@ -1,0 +1,9 @@
+{
+  "description": "Openresty web server - based on Ubuntu {{user `ubuntu_version`}}",
+  "_comment": "Builds an EBS-based AMI.",
+  "builders": [
+    {
+      "ami_name": "{{user `name`}}-Openresty-web-server-{{user `ubuntu_version`}}-{{user `create_time`}}",
+      "ami_description": "{{user `name`}}-Openresty web server, based on Ubuntu {{user `ubuntu_version`}} with AMI {{user `source_ami`}}, created on {{user `create_time`}}",
+      "run_tags": { "ami-create": "{{user `name`}}.{{user `aws_region`}}" },
+      "tags": { "ami": "{{user `name`}}.{{user `aws_region`}}" },

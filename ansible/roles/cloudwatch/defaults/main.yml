@@ -1,4 +1,0 @@
----
-cloudwatch_scripts_dir: aws-scripts-mon
-cloudwatch_scripts_archive: "CloudWatchMonitoringScripts-1.2.1.zip"
-cloudwatch_scripts_url: "http://aws-cloudwatch.s3.amazonaws.com/downloads/{{ cloudwatch_scripts_archive }}"

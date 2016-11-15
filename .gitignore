@@ -8,5 +8,5 @@ packer_cache/
 .vagrant
 
 # Ansible
-ansible/shared-roles
-ansible/*.retry
+shared-roles
+*.retry

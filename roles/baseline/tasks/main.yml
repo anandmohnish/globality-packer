@@ -2,7 +2,7 @@
 
 - name: add backports repo
   apt_repository:
-    repo="deb http://archive.ubuntu.com/ubuntu {{ ansible_lsb["codename"] }}-backports main restricted universe multiverse"
+    repo="deb http://archive.ubuntu.com/ubuntu {{ ansible_lsb['codename'] }}-backports main restricted universe multiverse"
     state=present
     update_cache=yes
 

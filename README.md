@@ -19,19 +19,22 @@ Builds Ubuntu AMIs using Ansible.
 
  4. Use our helper script to select the latest offical Ubuntu trusty AMI:
         
-        export AWS_SOURCE_AMI=$(./scripts/get_latest_ami_helper.sh <version>)
+        export UBUNTU_VERSION=<version>
+        export AWS_SOURCE_AMI=$(./scripts/get_latest_ami_helper.sh)
 
     _Where `version` is either **`xenial`** (16.04) or **`trusty`** (14.04)_
 
 ## Usage
 
+_Note: the order of the concatenated json files is important!_
+
  1. Validate:
 
-        packer validate aws/ebs.json
+        cat aws/<openresty|docker>.json aws/ebs.json | packer validate -
 
  2. Build:
 
-        packer build aws/ebs.json
+        cat aws/<openresty|docker>.json aws/ebs.json | packer build -
 
  3. If you are happy with the AMI, make it public/visible in the AWS Console
     If not, delete it and its snapshot in the AWS Console
@@ -54,14 +57,10 @@ To test Ansible using Vagrant.
 
         vagrant up packer-ubuntu-<xenial|trusty>
 
- 2. Change to the Ansible directory:
-
-        cd ansible
-
- 3. Pull the Ansible Galaxy roles:
+ 2. Pull the Ansible Galaxy roles:
 
         ansible-galaxy install -r requirements.yml -p shared-roles --force
 
- 4. Run Ansible:
+ 3. Run Ansible:
 
         ansible-playbook -i inventory/vagrant packer.yml -l <xenial|trusty>

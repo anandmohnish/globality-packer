@@ -2,7 +2,7 @@
 
 # Ansible role that closely translates to https://github.com/aws/amazon-ecs-agent into 
 
-- name: Install requisite packages
+- name: Install prerequisite packages
   apt:
     name: python-docker
     state: present
@@ -13,21 +13,24 @@
   with_items:
     - "{{ ecs_paths }}"
 
-- name: Render template and deploy ECS agent config file
+- name: Customize ECS configuration
   template: src=ecs.config.j2 dest=/etc/ecs/ecs.config
 
-- name: Set sysctl value for localhost route
+- name: Enable the use of 127/8 for local routing purposes
   sysctl:
     name: net.ipv4.conf.all.route_localnet
     value: 1
     state: present
 
-- iptables: table=nat chain=PREROUTING protocol=tcp destination=169.254.170.2 destination_port=80 jump=DNAT to_destination=127.0.0.1:51679 comment="Docker redirect traffic for AWS ECS agent - set by Ansible"
-  become: yes
-- iptables: table=nat chain=OUTPUT destination=169.254.170.2 protocol=tcp match=tcp destination_port=80 jump=REDIRECT to_ports=51679 comment="Docker redirect traffic for AWS ECS agent - set by Ansible"
+- name: Iptables PREROUTING rule for Docker redirect to allow traffic to AWS ECS container agent ports
+  iptables: table=nat chain=PREROUTING protocol=tcp destination=169.254.170.2 destination_port=80 jump=DNAT to_destination=127.0.0.1:51679 comment="Docker redirect traffic for AWS ECS agent - set by Ansible"
   become: yes
 
-- name: Manage AWS ECS agent Docker image
+- name: Iptables OUTPUT rule for Docker redirect to allow traffic to AWS ECS container agent ports
+  iptables: table=nat chain=OUTPUT destination=169.254.170.2 protocol=tcp match=tcp destination_port=80 jump=REDIRECT to_ports=51679 comment="Docker redirect traffic for AWS ECS agent - set by Ansible"
+  become: yes
+
+- name: Pull AWS ECS agent image and set config
   docker:
     detach: true
     env:

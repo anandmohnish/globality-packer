@@ -1,0 +1,6 @@
+---
+
+ecs_paths:
+  - /var/log/ecs
+  - /etc/ecs
+  - /var/lib/ecs/data

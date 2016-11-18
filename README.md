@@ -1,7 +1,7 @@
 # Globality Packer
 
 Builds Ubuntu AMIs using Ansible.
-
+Required Packer version: **>=0.12.0**
 
 ## Prerequisites
 
@@ -20,13 +20,14 @@ Builds Ubuntu AMIs using Ansible.
  4. Use our helper script to select the latest offical Ubuntu trusty AMI:
         
         export UBUNTU_VERSION=<version>
-        export AWS_SOURCE_AMI=$(./scripts/get_latest_ami_helper.sh)
 
     _Where `version` is either **`xenial`** (16.04) or **`trusty`** (14.04)_
 
 ## Usage
 
 _Note: the order of the concatenated json files is important!_
+
+Right now, Openresty images should be made based on `trusty` and Docker images should be made based on `xenial`.
 
  1. Validate:
 
@@ -36,9 +37,7 @@ _Note: the order of the concatenated json files is important!_
 
         cat aws/<openresty|docker>.json aws/ebs.json | packer build -
 
- 3. If you are happy with the AMI, make it public/visible in the AWS Console
-    If not, delete it and its snapshot in the AWS Console
-
+ 3. **Please note: the image will be made public upon creation.**
 
 ## Testing
 

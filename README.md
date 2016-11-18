@@ -1,7 +1,7 @@
 # Globality Packer
 
 Builds Ubuntu AMIs using Ansible.
-
+Required Packer version: **>=0.12.0**
 
 ## Prerequisites
 

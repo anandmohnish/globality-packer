@@ -25,6 +25,8 @@
       tags: ["swapfile"]
     - role: codedeploy
       tags: ["aws", "codedeploy"]
+    - role: postgresql-client
+      tags: ["postgresql-client"]
   vars:
     aws_region: us-east-1
 

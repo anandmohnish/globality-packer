@@ -6,7 +6,7 @@
     content: |
       Package: postgresql-client
       Pin: release v={{ postgresql_client_version }}
-      Pin-Priority: 1002
+      Pin-Priority: 10
 
 - name: Install apt key for PostgreSQL PPA
   apt_key:
@@ -36,5 +36,5 @@
 
 - name: Install PostgreSQL client
   apt:
-    name: postgresql-client
+    name: postgresql-client-{{ postgresql_client_version }}
     state: latest

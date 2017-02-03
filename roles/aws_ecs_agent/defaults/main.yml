@@ -12,3 +12,5 @@ ecs_paths:
   - /var/log/ecs
   - /etc/ecs
   - /var/lib/ecs/data
+
+docker_engine_version: 1.12.6*

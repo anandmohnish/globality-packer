@@ -55,7 +55,7 @@
 
 - name: Load ECS Agent systemd config
   systemd:
-    name: aws_ecs_agent
+    name: ecs-agent
     daemon_reload: yes
     enabled: yes
     state: started

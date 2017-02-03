@@ -45,9 +45,7 @@
 - name: install host (xenial)
   hosts: xenial
   roles:
-    - role: andrewrothstein.docker
-      tags: ["docker"]
-    - role: aws_ecs_agent
+    - role: ecs-agent
       tags: ["ecs"]
   vars:
     aws_region: us-east-1

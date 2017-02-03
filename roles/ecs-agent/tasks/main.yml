@@ -1,0 +1,62 @@
+---
+
+# Ansible role that closely translates to https://github.com/aws/amazon-ecs-agent into 
+
+- name: Install prerequisite packages
+  environment:
+    DEBIAN_FRONTEND: noninteractive
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+    - "{{ packages }}"
+
+- name: Set up the directory the agent uses
+  file: path={{ item }} state=directory
+  with_items:
+    - "{{ ecs_paths }}"
+
+- name: Customize ECS configuration
+  template:
+    src: ecs.config.j2
+    dest: /etc/ecs/ecs.config
+
+- name: Enable the use of 127/8 for local routing purposes
+  sysctl:
+    name: net.ipv4.conf.all.route_localnet
+    value: 1
+    state: present
+
+- name: Add Docker PPA apt key
+  apt_key:
+    url: https://yum.dockerproject.org/gpg
+    id: 2C52609D
+
+- name: Add Docker PPA
+  apt_repository:
+    repo: "deb https://apt.dockerproject.org/repo/ ubuntu-{{ ansible_lsb['codename'] }} main"
+    state: present
+
+- name: Install Docker Engine
+  apt:
+    name: "docker-engine={{ docker_engine_version }}"
+    state: present
+    update_cache: yes
+
+- name: Deploy ECS Agent container systemd config
+  template:
+    src: ecs-agent.system.j2
+    dest: /etc/systemd/system/ecs-agent.service
+
+- name: Deploy persistent iptables rules
+  template:
+    src: iptables.v4.j2
+    dest: /etc/iptables/rules.v4
+
+- name: Load ECS Agent systemd config
+  systemd:
+    name: ecs-agent
+    daemon_reload: yes
+    enabled: yes
+    state: started

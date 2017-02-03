@@ -28,11 +28,9 @@
 
 - name: Iptables PREROUTING rule for Docker redirect to allow traffic to AWS ECS container agent ports
   command: iptables -t nat -A PREROUTING -p tcp -d 169.254.170.2 --dport 80 -j DNAT --to-destination 127.0.0.1:51679
-  become: yes
 
 - name: Iptables OUTPUT rule for Docker redirect to allow traffic to AWS ECS container agent ports
   command: iptables -t nat -A OUTPUT -d 169.254.170.2 -p tcp -m tcp --dport 80 -j REDIRECT --to-ports 51679
-  become: yes
 
 - name: Add Docker PPA apt key
   apt_key:

@@ -4,11 +4,13 @@ Requires=docker.service
 After=docker.service
 
 [Service]
+TimeoutStartSec=0
 Restart=always
-KillMode=none
-ExecStartPre=-/usr/bin/docker kill %p
-ExecStartPre=-/usr/bin/docker rm -v %p
-ExecStart=/usr/bin/docker run --name ecs-agent \
+
+ExecStartPre=-/usr/bin/docker stop %n
+ExecStartPre=-/usr/bin/docker rm %n
+ExecStartPre=/usr/bin/docker pull amazon/amazon-ecs-agent:latest
+ExecStart=/usr/bin/docker run --name %n \
 	--detach=true \
 	--restart=on-failure:10 \
 	--volume=/var/run/docker.sock:/var/run/docker.sock \
@@ -21,8 +23,6 @@ ExecStart=/usr/bin/docker run --name ecs-agent \
 	--env=ECS_ENABLE_TASK_IAM_ROLE=true \
 	--env=ECS_ENABLE_TASK_IAM_ROLE_NETWORK_HOST=true \
 	amazon/amazon-ecs-agent:latest
-ExecStop=-/usr/bin/docker stop $p
-ExecStopPost=-/usr/bin/docker stop %p
 
 [Install]
-WantedBy=default.target
+WantedBy=multi-user.target

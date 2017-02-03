@@ -52,8 +52,8 @@
 
 - name: Deploy ECS Agent container systemd config
   template:
-    src: ecs_agent_systemd.j2
-    dest: /etc/systemd/system/aws_ecs_agent.service
+    src: ecs-agent.systemd.j2
+    dest: /etc/systemd/system/ecs-agent.service
 
 - name: Load ECS Agent systemd config
   systemd:

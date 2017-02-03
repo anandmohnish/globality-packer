@@ -3,6 +3,8 @@
 # Ansible role that closely translates to https://github.com/aws/amazon-ecs-agent into 
 
 - name: Install prerequisite packages
+  environment:
+    DEBIAN_FRONTEND: noninteractive
   apt:
     name: "{{ item }}"
     state: present
@@ -26,12 +28,6 @@
     value: 1
     state: present
 
-- name: Iptables PREROUTING rule for Docker redirect to allow traffic to AWS ECS container agent ports
-  command: iptables -t nat -A PREROUTING -p tcp -d 169.254.170.2 --dport 80 -j DNAT --to-destination 127.0.0.1:51679
-
-- name: Iptables OUTPUT rule for Docker redirect to allow traffic to AWS ECS container agent ports
-  command: iptables -t nat -A OUTPUT -d 169.254.170.2 -p tcp -m tcp --dport 80 -j REDIRECT --to-ports 51679
-
 - name: Add Docker PPA apt key
   apt_key:
     url: https://yum.dockerproject.org/gpg
@@ -52,6 +48,11 @@
   template:
     src: ecs-agent.system.j2
     dest: /etc/systemd/system/ecs-agent.service
+
+- name: Deploy persistent iptables rules
+  template:
+    src: iptables.v4.j2
+    dest: /etc/iptables/rules.v4
 
 - name: Load ECS Agent systemd config
   systemd:

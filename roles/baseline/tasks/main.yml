@@ -35,9 +35,6 @@
     state: running
     enabled: yes
 
-- name: run iptables command to load conntrack module
-  command: "iptables -t nat -L"
-
 - name: set number of open file descriptors system wide via PAM
   template:
     dest: "/etc/security/limits.d/fs_limits.conf"
@@ -46,21 +43,17 @@
     owner: root
     group: root
 
+- name: run iptables command to load conntrack module
+  command: "iptables -t nat -L"
+
 - name: set sysctl values
   sysctl:
     name: "{{ item.key }}"
     value: "{{ item.value }}"
     sysctl_set: yes
     state: present
-    reload: yes
-  with_dict:
-    fs.file-max: "{{ os_max_open_files }}"
-    fs.nr_open: "{{ os_max_open_files }}"
-    net.nf_conntrack_max: "{{ nf_conntrack_max }}"
-    net.core.somaxconn: "{{ net_core_somaxconn }}"
-    net.ipv4.tcp_fin_timeout: "{{ tcp_fin_timeout }}"
-    net.ipv4.tcp_window_scaling: "{{ tcp_window_scaling }}"
-    net.ipv4.tcp_max_syn_backlog: "{{ tcp_max_syn_backlog }}"
+    reload: no
+  with_dict: "{{ sysctl_config }}"
 
 - name: update sshd_config
   lineinfile:

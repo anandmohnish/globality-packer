@@ -1,5 +1,5 @@
 # Managed by Ansible
 # <domain> <type> <item> <value>
 # number of open file descriptors
-* hard nofile {{ os_max_open_files }}
-* soft nofile {{ os_max_open_files }}
+* hard nofile {{ sysctl_config['fs.file-max'] }}
+* soft nofile {{ sysctl_config['fs.file-max'] }}

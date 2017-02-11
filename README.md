@@ -46,15 +46,15 @@ To test Ansible using Vagrant.
  0. _Only required once per virtualenv_
 
         mkvirtualenv packer-<xenial|trusty>
-        pip install -r requirements-<xenial|trusty>.txt
+        pip install -r requirements-${UBUNTU_VERSION}.txt
 
     From then on before you want to use Ansible:
     
-        workon packer-<xenial|trusty>
+        workon packer-$UBUNTU_VERSION
 
  1. Choose an OS version, and bring up the vagrant instance.
 
-        vagrant up packer-ubuntu-<xenial|trusty>
+        vagrant up packer-ubuntu-$UBUNTU_VERSION
 
  2. Pull the Ansible Galaxy roles:
 
@@ -62,4 +62,4 @@ To test Ansible using Vagrant.
 
  3. Run Ansible:
 
-        ansible-playbook -i inventory/vagrant packer.yml -l <xenial|trusty>
+        ansible-playbook -i inventory/vagrant packer.yml -l $UBUNTU_VERSION

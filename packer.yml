@@ -27,6 +27,8 @@
       tags: ["aws", "codedeploy"]
     - role: postgresql-client
       tags: ["postgresql-client"]
+    - role: datadog-agent
+      tags: ["datadog"]
   vars:
     aws_region: us-east-1
 

@@ -1,2 +1,4 @@
 ---
 - name: kamaln7.swapfile
+- name: datadog-agent
+  src: Datadog.datadog

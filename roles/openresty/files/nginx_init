@@ -17,8 +17,8 @@
 
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/openresty/nginx/sbin
 DAEMON=/usr/local/openresty/nginx/sbin/nginx
-# Even though this is an openresty packaged nginx, the binary is 
-# still called 'nginx', and thus the daemon will continue to be 
+# Even though this is an openresty packaged nginx, the binary is
+# still called 'nginx', and thus the daemon will continue to bej
 # name 'nginx'
 NAME=nginx
 DESC=nginx

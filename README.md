@@ -17,25 +17,15 @@ Required Packer version: **>=0.12.0**
 
         eval $(awsenv packer)
 
- 4. Use our helper script to select the latest offical Ubuntu trusty AMI:
-        
-        export UBUNTU_VERSION=<version>
-
-    _Where `version` is either **`xenial`** (16.04) or **`trusty`** (14.04)_
-
 ## Usage
-
-_Note: the order of the concatenated json files is important!_
-
-Right now, Openresty images should be made based on `trusty` and Docker images should be made based on `xenial`.
 
  1. Validate:
 
-        cat aws/<openresty|docker>.json aws/ebs.json | packer validate -
+        packer validate ecs_optimized.json|legacy_web.json
 
  2. Build:
 
-        cat aws/<openresty|docker>.json aws/ebs.json | packer build -
+        packer build ecs_optimized.json|legacy_web.json
 
  3. **Please note: the image will be made public upon creation.**
 
@@ -45,16 +35,16 @@ To test Ansible using Vagrant.
 
  0. _Only required once per virtualenv_
 
-        mkvirtualenv packer-<xenial|trusty>
-        pip install -r requirements-${UBUNTU_VERSION}.txt
+        mkvirtualenv packer-ubuntu
+        pip install -r requirements.txt
 
     From then on before you want to use Ansible:
-    
-        workon packer-$UBUNTU_VERSION
 
- 1. Choose an OS version, and bring up the vagrant instance.
+        workon packer-ubuntu
 
-        vagrant up packer-ubuntu-$UBUNTU_VERSION
+ 1. Bring up the vagrant instance.
+
+        vagrant up packer-ubuntu
 
  2. Pull the Ansible Galaxy roles:
 
@@ -62,4 +52,10 @@ To test Ansible using Vagrant.
 
  3. Run Ansible:
 
-        ansible-playbook -i inventory/vagrant packer.yml -l $UBUNTU_VERSION
+    For ECS optimized machines:
+
+        ansible-playbook -i inventory/vagrant packer.yml --skip-tags=legacy
+
+    For Openresty web servers:
+
+        ansible-playbook -i inventory/vagrant packer.yml --skip-tags=ecs

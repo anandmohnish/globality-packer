@@ -1,6 +1,5 @@
 [vagrant]
-trusty ansible_host=172.16.14.4
-xenial ansible_host=172.16.16.4
+packer-ubuntu ansible_host=172.16.16.4
 
 [vagrant:vars]
 ansible_ssh_user=vagrant

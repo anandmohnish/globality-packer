@@ -3,14 +3,8 @@
 - name: bootstrap host
   hosts: vagrant
   tasks:
-    - name: copy bootstrap script
-      copy:
-        src: "scripts/bootstrap.sh"
-        dest: /tmp/bootstrap.sh
-        mode: 0755
-      tags: ["bootstrap"]
     - name: run bootstrap script
-      shell: "UBUNTU_VERSION={{ lookup('env', 'UBUNTU_VERSION') }} /tmp/bootstrap.sh {{ ansible_lsb['codename'] }}" 
+      script: scripts/bootstrap.sh
       tags: ["bootstrap"]
 
 - name: install host (all)
@@ -23,31 +17,22 @@
       swapfile_swappiness: 60
       swapfile_location: /swapfile
       tags: ["swapfile"]
+    - role: datadog-agent
+      tags: ["datadog"]
     - role: codedeploy
       tags: ["aws", "codedeploy"]
     - role: postgresql-client
       tags: ["postgresql-client"]
-    - role: datadog-agent
-      tags: ["datadog"]
-  vars:
-    aws_region: us-east-1
-
-- name: install host (trusty)
-  hosts: trusty
-  roles:
-    - role: openresty
-      tags: ["openresty"]
-    - role: python
-      tags: ["python"]
-    - role: nodejs
-      tags: ["nodejs"]
-  vars:
-    aws_region: us-east-1
-
-- name: install host (xenial)
-  hosts: xenial
-  roles:
+    # Docker enabled ECS instances
     - role: ecs-agent
       tags: ["ecs"]
+    # Legacy Web machines
+    - role: openresty
+      tags: ["openresty", "legacy"]
+    - role: python
+      tags: ["python", "legacy"]
+    - role: nodejs
+      tags: ["nodejs", "legacy"]
+
   vars:
     aws_region: us-east-1

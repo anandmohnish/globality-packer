@@ -9,7 +9,9 @@
 # AWS CLI does for Debian packages.
 
 - name: install utilities
-  pip: name={{ item }} state=present
+  pip:
+    name: "{{ item }}"
+    state: present
   with_items:
     - httplib2
     - awscli
@@ -17,13 +19,13 @@
 
 - name: determine the bucket URL
   set_fact:
-    bucket_url: https://s3-{{ aws_region }}.amazonaws.com/aws-codedeploy-{{ aws_region }}
-  when: aws_region != 'us-east-1'
+    bucket_url: "https://s3-{{ aws_region }}.amazonaws.com/aws-codedeploy-{{ aws_region }}"
+  when: aws_region != "us-east-1"
 
 - name: determine the bucket URL
   set_fact:
-    bucket_url: https://s3.amazonaws.com/aws-codedeploy-{{ aws_region }}
-  when: aws_region == 'us-east-1'
+    bucket_url: "https://s3.amazonaws.com/aws-codedeploy-{{ aws_region }}"
+  when: aws_region == "us-east-1"
 
 - name: fetch the latest version data
   uri:
@@ -46,4 +48,6 @@
     force: yes
 
 - name: start the codedeploy-agent
-  service: name=codedeploy-agent state=started
+  service:
+    name: codedeploy-agent
+    state: started

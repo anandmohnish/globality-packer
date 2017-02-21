@@ -1,24 +1,29 @@
 ---
 
 - name: copy nodesource apt key
-  copy: src=nodesource.gpg.key dest=/tmp
+  copy:
+    src: nodesource.gpg.key
+    dest: /tmp
 
 - name: add nodesource apt key
-  apt_key: file="/tmp/nodesource.gpg.key"
+  apt_key:
+    file: /tmp/nodesource.gpg.key
 
 - name: add nodesource repo
   apt_repository:
-    repo="deb http://deb.nodesource.com/node_6.x trusty main"
-    state=present
-    update_cache=yes
+    repo: "deb http://deb.nodesource.com/node_6.x xenial main"
+    state: present
+    update_cache: yes
 
 - name: install nodejs
-  apt: name="{{ item }}" state=present
+  apt:
+    name: "{{ item }}"
+    state: present
   with_items:
     - nodejs
 
 - name: install packages globally with npm
-  command: npm install --global {{ item }}
+  command: "npm install --global {{ item }}"
   with_items:
     - bower
     - coffee-script
@@ -27,7 +32,12 @@
     - pm2
 
 - name: make sure pm2 data directory exists
-  file: path=/var/www/.pm2 state=directory owner=www-data group=www-data recurse=yes
+  file:
+    path: /var/www/.pm2
+    state: directory
+    owner: www-data
+    group: www-data
+    recurse: yes
 
 - name: make sure pm2 log rotation configuration exists
   command: pm2 logrotate

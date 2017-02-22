@@ -35,7 +35,7 @@
 
 - name: Add Docker PPA
   apt_repository:
-    repo: "deb https://apt.dockerproject.org/repo/ ubuntu-{{ ansible_lsb['codename'] }} main"
+    repo: "deb https://apt.dockerproject.org/repo/ ubuntu-xenial main"
     state: present
 
 - name: Install Docker Engine

@@ -1,7 +1,9 @@
 ---
 
 - name: install python dependencies from apt
-  apt: name={{ item }} state=present
+  apt:
+    name: "{{ item }}"
+    state: present
   with_items:
     - build-essential
     - libffi-dev
@@ -11,7 +13,9 @@
     - python-dev
 
 - name: install python dependencies from pip
-  pip: name={{ item }} state=latest
+  pip:
+    name: "{{ item }}"
+    state: latest
   with_items:
     - httpie
     - ndg-httpsclient
@@ -21,16 +25,26 @@
     - virtualenvwrapper
 
 - name: make sure supervisord directories exist
-  file: path={{ item }} state=directory
+  file:
+    path: "{{ item }}"
+    state: directory
   with_items:
     - /etc/supervisor/conf.d
     - /var/log/supervisor
 
 - name: install default supervisord configuration file
-  copy: src=supervisord.conf dest=/etc/supervisord.conf
+  copy:
+    src: supervisord.conf
+    dest: /etc/supervisord.conf
 
-- name: install supervisord init script
-  copy: src=supervisor.ubuntu.init-script dest=/etc/init.d/supervisor mode=u+rwx
+- name: install supervisord systemd script
+  copy:
+    src: supervisord.service
+    dest: /etc/systemd/system/supervisord.service
+    mode: 0644
 
 - name: make sure supervisord is running and starts on boot
-  service: name=supervisor state=started enabled=yes
+  service:
+    name: supervisord
+    state: started
+    enabled: yes

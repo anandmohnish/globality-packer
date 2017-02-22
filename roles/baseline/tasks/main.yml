@@ -2,7 +2,7 @@
 
 - name: add backports repo
   apt_repository:
-    repo: "deb http://archive.ubuntu.com/ubuntu {{ ansible_lsb['codename'] }}-backports main restricted universe multiverse"
+    repo: "deb http://archive.ubuntu.com/ubuntu xenial-backports main restricted universe multiverse"
     state: present
     update_cache: yes
 
@@ -61,17 +61,3 @@
     regexp: "^MaxStartups"
     line: "MaxStartups 100"
     state: present
-
-- name: update dhclient
-  copy:
-    src: dhclient.conf
-    dest: /etc/dhcp/dhclient.conf
-  when: ansible_lsb["codename"] == "trusty"
-
-- name: upgrade kernel
-  apt:
-    update_cache: yes
-    name: linux-generic-lts-vivid
-    state: present
-  when: ansible_kernel | version_compare("3.18.0", "lt")
-  register: upgrade_kernel

@@ -12,25 +12,10 @@
   apt_key:
     url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
     state: present
-  when: ansible_lsb["codename"] == "xenial"
-
-# Ubunty Trusty's Python version (v2.7.6) doesn't support SNI so we have to resort to a shell command
-- name: Install workaround prerequisites
-  apt: 
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - httpie
-    - ca-certificates
-  when: ansible_lsb["codename"] == "trusty"
-
-- name: Install apt key for PostgreSQL PPA workaround Trusty bugs
-  shell: http GET https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
-  when: ansible_lsb["codename"] == "trusty"
 
 - name: Configure PostgreSQL PPA
   apt_repository:
-    repo: "deb http://apt.postgresql.org/pub/repos/apt/ {{ ansible_lsb['codename'] }}-pgdg main"
+    repo: "deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main"
     update_cache: yes
     state: present
 

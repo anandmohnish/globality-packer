@@ -42,6 +42,7 @@
     src: supervisord.service
     dest: /etc/systemd/system/supervisord.service
     mode: 0644
+
 - name: make sure supervisord is running and starts on boot
   service:
     name: supervisord

@@ -26,11 +26,11 @@
     # Docker enabled ECS instances
     - role: ecs-agent
       tags: ["ecs"]
+    - role: python
+      tags: ["python"]
     # Legacy Web machines
     - role: openresty
       tags: ["openresty", "legacy"]
-    - role: python
-      tags: ["python", "legacy"]
     - role: nodejs
       tags: ["nodejs", "legacy"]
 

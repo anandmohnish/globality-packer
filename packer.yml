@@ -27,10 +27,10 @@
     - role: ecs-agent
       tags: ["ecs"]
     # Legacy Web machines
-    - role: python
-      tags: ["python", "legacy"]
     - role: openresty
       tags: ["openresty", "legacy"]
+    - role: python
+      tags: ["python", "legacy"]
     - role: nodejs
       tags: ["nodejs", "legacy"]
 

@@ -16,3 +16,6 @@ sysctl_config:
   net.ipv4.tcp_fin_timeout: 15
   net.ipv4.tcp_window_scaling: 1
   net.ipv4.tcp_max_syn_backlog: 3240000
+
+pip_packages:
+  - psycopg2

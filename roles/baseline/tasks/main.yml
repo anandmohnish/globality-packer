@@ -12,6 +12,12 @@
     state: present
   with_items: "{{ apt_packages }}"
 
+- name: install python libraries
+  pip:
+    name: "{{ item }}"
+    state: latest
+  with_items: "{{ pip_packages }}"
+
 - name: set timezone
   copy:
     content: "{{ timezone }}"

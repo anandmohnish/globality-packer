@@ -21,11 +21,11 @@ Required Packer version: **>=0.12.0**
 
  1. Validate:
 
-        packer validate ecs_optimized.json|legacy_web.json
+        packer validate aws/ecs_optimized.json|aws/legacy_web.json
 
  2. Build:
 
-        packer build ecs_optimized.json|legacy_web.json
+        packer build aws/ecs_optimized.json|aws/legacy_web.json
 
  3. **Please note: the image will be made public upon creation.**
 

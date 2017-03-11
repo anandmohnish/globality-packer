@@ -44,6 +44,11 @@
     state: present
     update_cache: yes
 
+- name: Deploy docker systemd config
+  template:
+    src: docker.system.j2
+    dest: /etc/systemd/system/docker.service
+
 - name: Deploy ECS Agent container systemd config
   template:
     src: ecs-agent.system.j2
@@ -53,6 +58,13 @@
   template:
     src: iptables.v4.j2
     dest: /etc/iptables/rules.v4
+
+- name: Load Docker systemd config
+  systemd:
+    name: docker
+    daemon_reload: yes
+    enabled: yes
+    state: started
 
 - name: Load ECS Agent systemd config
   systemd:

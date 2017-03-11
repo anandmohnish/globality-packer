@@ -8,11 +8,13 @@ packages:
   - apt-transport-https
   - ca-certificates
   - iptables-persistent
+  - nfs-common
 
 ecs_paths:
   - /var/log/ecs
   - /etc/ecs
   - /var/lib/ecs/data
+  - /opt/nginx_conf
 
 # Docker 1.12.6* matches ECS Agent 1.14
 # http://docs.aws.amazon.com/AmazonECS/latest/developerguide/container_agent_versions.html

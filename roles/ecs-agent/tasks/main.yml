@@ -71,9 +71,16 @@
     enabled: yes
     state: started
 
+- name: Load ECS Agent path dependency
+  systemd:
+    name: ecs-agent.path
+    daemon_reload: yes
+    enabled: yes
+    state: started
+
 - name: Load ECS Agent systemd config
   systemd:
     name: ecs-agent
     daemon_reload: yes
-    enabled: yes
-    state: started
+    enabled: no
+    state: stopped

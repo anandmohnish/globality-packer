@@ -12,10 +12,9 @@
     - linux-headers-{{ ansible_kernel }}
 
 - name: Download Intel driver source
-  get_url:
-    url: "https://downloads.sourceforge.net/project/e1000/ixgbevf%20stable/{{ ixgbevf_version }}/ixgbevf-{{ ixgbevf_version }}.tar.gz"
-    dest: /tmp/ixgbevf-{{ ixgbevf_version }}.tar.gz
-    checksum: sha1:{{ ixgbevf_tar_sha1_hash }}
+  command: >
+    wget "https://downloads.sourceforge.net/project/e1000/ixgbevf%20stable/{{ ixgbevf_version }}/ixgbevf-{{ ixgbevf_version }}.tar.gz"
+    -O /tmp/ixgbevf-{{ ixgbevf_version }}.tar.gz
 
 - name: Unpack Intel driver source
   unarchive:

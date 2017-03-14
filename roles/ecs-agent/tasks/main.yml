@@ -49,7 +49,7 @@
     src: docker.system.j2
     dest: /etc/systemd/system/docker.service
 
-- name: Deploy ECS Agent container systemd config
+- name: Deploy ECS Agent container systemd path dependency
   template:
     src: ecs-agent.path.j2
     dest: /etc/systemd/system/ecs-agent.path
@@ -80,7 +80,7 @@
 
 - name: Load ECS Agent systemd config
   systemd:
-    name: ecs-agent
+    name: ecs-agent.service
     daemon_reload: yes
     enabled: no
     state: stopped

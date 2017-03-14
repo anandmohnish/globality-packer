@@ -2,12 +2,9 @@
 
 apt_packages:
   - ack-grep
-  - awscli
-  - aws-shell
   - curl
   - emacs24-nox
   - htop
-  - httplib2
   - httpie
   - iftop
   - iotop

@@ -8,15 +8,6 @@
 # The following is an approximately of what the install script retrieved with the
 # AWS CLI does for Debian packages.
 
-- name: install utilities
-  pip:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - httplib2
-    - awscli
-    - aws-shell
-
 - name: determine the bucket URL
   set_fact:
     bucket_url: "https://s3-{{ aws_region }}.amazonaws.com/aws-codedeploy-{{ aws_region }}"

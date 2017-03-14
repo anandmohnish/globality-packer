@@ -26,7 +26,7 @@
       tags: ["ecs"]
     # Legacy Web machines
     - role: codedeploy
-      tags: ["codedeploy", "legacy"]
+      tags: ["aws", "codedeploy"]
     - role: openresty
       tags: ["openresty", "legacy"]
     - role: python

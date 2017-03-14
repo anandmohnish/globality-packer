@@ -2,6 +2,7 @@
 Description=AWS ECS Agent
 Requires=docker.service
 After=docker.service
+RequiresMountsFor=/opt/nginx_conf
 
 [Service]
 TimeoutStartSec=0

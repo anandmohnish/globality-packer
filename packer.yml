@@ -19,14 +19,14 @@
       tags: ["swapfile"]
     - role: datadog-agent
       tags: ["datadog"]
-    - role: codedeploy
-      tags: ["aws", "codedeploy"]
     - role: postgresql-client
       tags: ["postgresql-client"]
     # Docker enabled ECS instances
     - role: ecs-agent
       tags: ["ecs"]
     # Legacy Web machines
+    - role: codedeploy
+      tags: ["codedeploy", "legacy"]
     - role: openresty
       tags: ["openresty", "legacy"]
     - role: python

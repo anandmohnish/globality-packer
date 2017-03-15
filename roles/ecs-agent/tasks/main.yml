@@ -49,9 +49,14 @@
     src: docker.system.j2
     dest: /etc/systemd/system/docker.service
 
+- name: Deploy ECS Agent timer systemd config
+  template:
+    src: ecs-agent.timer.j2
+    dest: /etc/systemd/system/ecs-agent.timer
+
 - name: Deploy ECS Agent container systemd config
   template:
-    src: ecs-agent.system.j2
+    src: ecs-agent.service.j2
     dest: /etc/systemd/system/ecs-agent.service
 
 - name: Deploy persistent iptables rules
@@ -66,9 +71,16 @@
     enabled: yes
     state: started
 
-- name: Load ECS Agent systemd config
+- name: Load ECS Agent systemd timer
   systemd:
-    name: ecs-agent
+    name: ecs-agent.timer
     daemon_reload: yes
     enabled: yes
     state: started
+
+- name: Load ECS Agent systemd config
+  systemd:
+    name: ecs-agent.service
+    daemon_reload: yes
+    enabled: no
+    state: stopped

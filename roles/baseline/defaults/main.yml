@@ -19,3 +19,6 @@ sysctl_config:
 
 pip_packages:
   - psycopg2
+  - httplib2
+  - awscli
+  - aws-shell

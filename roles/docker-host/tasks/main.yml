@@ -1,0 +1,49 @@
+---
+- name: Install prerequisite packages
+  environment:
+    DEBIAN_FRONTEND: noninteractive
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+    - "{{ packages }}"
+
+- name: Set up the directory the agent uses
+  file: path={{ item }} state=directory
+  with_items:
+    - "{{ ecs_paths }}"
+
+- name: Enable the use of 127/8 for local routing purposes
+  sysctl:
+    name: net.ipv4.conf.all.route_localnet
+    value: 1
+    state: present
+
+- name: Add Docker PPA apt key
+  apt_key:
+    url: https://yum.dockerproject.org/gpg
+    id: 2C52609D
+
+- name: Add Docker PPA
+  apt_repository:
+    repo: "deb https://apt.dockerproject.org/repo/ ubuntu-xenial main"
+    state: present
+
+- name: Install Docker Engine
+  apt:
+    name: "docker-engine={{ docker_engine_version }}"
+    state: present
+    update_cache: yes
+
+- name: Deploy docker systemd config
+  template:
+    src: docker.system.j2
+    dest: /etc/systemd/system/docker.service
+
+- name: Load Docker systemd config
+  systemd:
+    name: docker
+    daemon_reload: yes
+    enabled: yes
+    state: started

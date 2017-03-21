@@ -24,6 +24,9 @@
     - role: postgresql-client
       tags: ["postgresql-client"]
     # Docker enabled ECS instances
+    - role: docker-host
+      tags: ["docker-host"]
+    # ECS instances
     - role: ecs-agent
       tags: ["ecs"]
     # Legacy Web machines

@@ -1,0 +1,58 @@
+{
+  "description": "Docker enabled with AWS ECS agent - based on Ubuntu Xenial",
+  "_comment": "Builds an EBS-based AMI.",
+  "builders": [
+    {
+      "ami_name": "{{user `name`}}-{{user `machine_type`}}-{{user `create_time`}}",
+      "ami_description": "{{user `name`}}-host, based on Ubuntu Xenial with AMI {{user `source_ami`}}, created on {{user `create_time`}}",
+      "run_tags": { "ami-create": "{{user `name`}}.{{user `aws_region`}}" },
+      "source_ami_filter": {
+        "filters": {
+          "virtualization-type": "hvm",
+          "name": "*ubuntu-xenial-16.04-amd64-server-*",
+          "root-device-type": "ebs"
+        },
+        "owners": ["099720109477"],
+        "most_recent": true
+      },
+      "tags": { "ami": "{{user `name`}}.{{user `aws_region`}}" },
+      "type": "amazon-ebs",
+      "access_key": "{{user `aws_access_key`}}",
+      "secret_key": "{{user `aws_secret_key`}}",
+      "region": "{{user `aws_region`}}",
+      "instance_type": "t2.micro",
+      "ssh_username": "{{user `ssh_username`}}",
+      "ssh_timeout": "10m",
+      "ami_groups": ["all"]
+    }
+  ],
+  "variables": {
+    "aws_access_key":  "{{env `AWS_ACCESS_KEY_ID`}}",
+    "aws_region": "{{env `AWS_DEFAULT_REGION`}}",
+    "aws_secret_key":  "{{env `AWS_SECRET_ACCESS_KEY`}}",
+    "machine_type": "docker-optimized",
+    "name": "globality",
+    "source_ami": "{{env `AWS_SOURCE_AMI`}}",
+    "ssh_username": "ubuntu",
+    "create_time": "{{isotime \"2006-01-02_03-04-05\"}}"
+  },
+  "provisioners": [
+    {
+      "type": "shell",
+      "execute_command": "{{ .Vars }} sudo -E /bin/bash '{{ .Path }}'",
+      "scripts": [
+        "scripts/bootstrap.sh"
+      ]
+    },
+    {
+      "type": "ansible",
+      "host_alias": "{{ user `machine_type` }}",
+      "playbook_file": "./packer.yml",
+      "extra_arguments": [
+        "-vvv",
+        "--skip-tags=legacy,ecs",
+        "-e aws_region={{user `aws_region`}}"
+      ]
+    }
+  ]
+}

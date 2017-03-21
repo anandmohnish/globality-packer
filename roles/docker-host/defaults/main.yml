@@ -1,0 +1,14 @@
+---
+packages:
+  - python-docker
+  - curl
+  - "linux-image-extra-{{ ansible_kernel }}"
+  - linux-image-extra-virtual
+  - apt-transport-https
+  - ca-certificates
+  - iptables-persistent
+  - nfs-common
+
+# Docker 1.12.6* matches ECS Agent 1.14
+# http://docs.aws.amazon.com/AmazonECS/latest/developerguide/container_agent_versions.html
+docker_engine_version: 1.12.6*

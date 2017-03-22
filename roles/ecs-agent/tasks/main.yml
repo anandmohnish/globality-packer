@@ -2,6 +2,11 @@
 
 # Ansible role that closely translates to https://github.com/aws/amazon-ecs-agent into 
 
+- name: Set up the directory the agent uses
+  file: path={{ item }} state=directory
+  with_items:
+    - "{{ ecs_paths }}"
+
 - name: Deploy ECS Agent container systemd config
   template:
     src: ecs-agent.service.j2

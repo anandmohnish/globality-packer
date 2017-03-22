@@ -23,6 +23,10 @@ ExecStart=/usr/bin/docker run --name %n \
 	--env=ECS_DATADIR=/data/ \
 	--env=ECS_ENABLE_TASK_IAM_ROLE=true \
 	--env=ECS_ENABLE_TASK_IAM_ROLE_NETWORK_HOST=true \
+    --env=ECS_IMAGE_CLEANUP_INTERVAL=10m \
+    --env=ECS_IMAGE_MINIMUM_CLEANUP_AGE=20m \
+    --env=ECS_ENGINE_TASK_CLEANUP_WAIT_DURATION=1h \
+    --env=ECS_NUM_IMAGES_DELETE_PER_CYCLE=10 \
 	amazon/amazon-ecs-agent:latest
 
 [Install]

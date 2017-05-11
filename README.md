@@ -13,9 +13,9 @@ Required Packer version: **>=0.12.0**
 
     See `aws/iam_policy.json` for a known, working IAM policy.
 
- 3. Export AWS credentials (e.g. using [awsenv](https://github.com/locationlabs/awsenv)):
+ 3. Export AWS credentials (e.g. using [botoenv](https://github.com/globality-corp/botoenv)):
 
-        eval $(awsenv packer)
+        eval $(botoenv -p packer)
 
 ## Usage
 
@@ -25,7 +25,7 @@ Required Packer version: **>=0.12.0**
 
  2. Build:
 
-        packer build aws/docker_optimized.jsonaws/docker_optimized.json||aws/ecs_optimized.json|aws/legacy_web.json
+        packer build aws/docker_optimized.json|aws/ecs_optimized.json|aws/legacy_web.json
 
  3. **Please note: the image will be made public upon creation.**
 

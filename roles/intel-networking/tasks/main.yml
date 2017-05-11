@@ -9,7 +9,8 @@
   with_items:
     - tar
     - dkms
-    - linux-headers-{{ ansible_kernel }}
+    - linux-aws
+    - linux-headers-aws
 
 - name: Download Intel driver source
   command: >

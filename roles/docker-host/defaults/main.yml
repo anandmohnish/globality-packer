@@ -2,7 +2,6 @@
 packages:
   - python-docker
   - curl
-  - "linux-image-extra-{{ ansible_kernel }}"
   - linux-image-extra-virtual
   - apt-transport-https
   - ca-certificates

@@ -12,10 +12,6 @@
   roles:
     - role: baseline
       tags: ["baseline"]
-# See https://github.com/docker/docker.github.io/issues/2694
-# and https://github.com/angstwad/docker.ubuntu/issues/162
-#   - role: intel-networking
-#   - tags: ["intel"]
     - role: kamaln7.swapfile
       swapfile_size: 1GB
       swapfile_swappiness: 60

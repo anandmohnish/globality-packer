@@ -8,6 +8,6 @@ packages:
   - iptables-persistent
   - nfs-common
 
-# Docker 1.12.6* matches ECS Agent 1.14
+# Docker 17.03.1-ce	matches ECS Agent 1.14.3
 # http://docs.aws.amazon.com/AmazonECS/latest/developerguide/container_agent_versions.html
-docker_engine_version: 1.12.6*
+docker_engine_version: 17.03.*

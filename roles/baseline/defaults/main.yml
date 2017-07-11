@@ -22,3 +22,6 @@ pip_packages:
   - httplib2
   - awscli
   - aws-shell
+
+prereq_paths:
+  - /opt/globality

@@ -1,5 +1,10 @@
 ---
 
+- name: Set up prerequisite directories
+  file: path={{ item }} state=directory
+  with_items:
+    - "{{ prereq_paths }}"
+
 - name: add backports repo
   apt_repository:
     repo: "deb http://archive.ubuntu.com/ubuntu xenial-backports main restricted universe multiverse"

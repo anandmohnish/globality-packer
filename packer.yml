@@ -27,4 +27,4 @@
       tags: ["ecs"]
 
   vars:
-    aws_region: us-east-1
+    aws_region: "{{ lookup('env', 'AWS_DEFAULT_REGION') }}"

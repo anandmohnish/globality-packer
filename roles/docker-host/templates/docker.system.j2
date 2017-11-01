@@ -10,9 +10,10 @@ Type=notify
 # for containers run by docker
 ExecStart=/usr/bin/dockerd --storage-driver=overlay
 ExecReload=/bin/kill -s HUP $MAINPID
+# https://github.com/scaleway/image-ubuntu/issues/68
+LimitNOFILE=1000000
 # Having non-zero Limit*s causes performance problems due to accounting overhead
 # in the kernel. We recommend using cgroups to do container-local accounting.
-LimitNOFILE=infinity
 LimitNPROC=infinity
 LimitCORE=infinity
 # Uncomment TasksMax if your systemd version supports it.

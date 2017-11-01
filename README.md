@@ -21,11 +21,11 @@ Required Packer version: **>=0.12.0**
 
  1. Validate:
 
-        packer validate aws/ecs_optimized.json|aws/legacy_web.json
+        packer validate aws/ecs_optimized.json
 
  2. Build:
 
-        packer build aws/docker_optimized.json|aws/ecs_optimized.json|aws/legacy_web.json
+        packer build aws/ecs_optimized.json
 
  3. **Please note: the image will be made public upon creation.**
 
@@ -54,12 +54,4 @@ To test Ansible using Vagrant.
 
     For ECS optimized machines:
 
-        ansible-playbook -i inventory/vagrant packer.yml --skip-tags=legacy
-
-    For Docker optimized machines *without* ECS:
-
-        ansible-playbook -i inventory/vagrant packer.yml --skip-tags=legacy,ecs
-
-    For Openresty web servers:
-
-        ansible-playbook -i inventory/vagrant packer.yml --skip-tags=ecs
+        ansible-playbook -i inventory/vagrant packer.yml

@@ -50,7 +50,6 @@
       "playbook_file": "./packer.yml",
       "extra_arguments": [
         "-vvv",
-        "--skip-tags=legacy",
         "-e aws_region={{user `aws_region`}}"
       ]
     }

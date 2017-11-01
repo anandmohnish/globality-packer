@@ -21,21 +21,10 @@
       tags: ["datadog"]
     - role: postgresql-client
       tags: ["postgresql-client"]
-    # Docker enabled ECS instances
     - role: docker-host
       tags: ["docker-host"]
-    # ECS instances
     - role: ecs-agent
       tags: ["ecs"]
-    # Legacy Web machines
-    - role: codedeploy
-      tags: ["codedeploy", "legacy"]
-    - role: openresty
-      tags: ["openresty", "legacy"]
-    - role: python
-      tags: ["python", "legacy"]
-    - role: nodejs
-      tags: ["nodejs", "legacy"]
 
   vars:
     aws_region: us-east-1

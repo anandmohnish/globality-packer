@@ -25,5 +25,3 @@ pip_packages:
 
 prereq_paths:
   - /opt/globality
-  # XXX must preserve legacy temporarily for backwards compatiblity
-  - /opt/nginx_conf

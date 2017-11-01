@@ -30,6 +30,10 @@
     name: "docker-engine={{ docker_engine_version }}"
     state: present
     update_cache: yes
+  environment:
+    # Prevent invoke-rc.d from starting docker-engine before custom systemd deployed
+    # https://askubuntu.com/a/75560
+    RUNLEVEL: 1
 
 - name: Deploy docker systemd config
   template:

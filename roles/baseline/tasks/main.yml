@@ -43,7 +43,7 @@
 - name: ensure that ntpd is running and enabled
   service:
     name: ntp
-    state: running
+    state: started
     enabled: yes
 
 - name: set number of open file descriptors system wide via PAM

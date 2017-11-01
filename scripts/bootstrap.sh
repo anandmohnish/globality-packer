@@ -21,6 +21,9 @@ echo "Upgrading setuptools and pip..."
 sudo -H pip install -U setuptools
 sudo -H pip install -U pip
 
+echo "Upgrading PyOpenSSL..."
+sudo -H pip install -U pyopenssl
+
 echo "Installing Ansible..."
 sudo -H pip install ansible
 

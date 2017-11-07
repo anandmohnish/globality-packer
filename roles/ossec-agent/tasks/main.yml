@@ -1,0 +1,22 @@
+---
+
+- name: Set up a directory for the OSSEC server data
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - /var/ossec_data
+
+- name: Install repository key
+  apt_key:
+    url: http://ossec.wazuh.com/repos/apt/conf/ossec-key.gpg.key
+
+- name: Configure repository
+  apt_repository:
+    repo: "deb https://ossec.wazuh.com/repos/apt/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} main"
+    state: present
+
+- name: Install ossec-hids-agent
+  apt:
+    pkg: ossec-hids-agent
+    state: present

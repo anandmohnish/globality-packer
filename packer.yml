@@ -25,6 +25,8 @@
       tags: ["docker-host"]
     - role: ecs-agent
       tags: ["ecs"]
+    - role: ossec-agent
+      tags: ["ossec"]
 
   vars:
     aws_region: "{{ lookup('env', 'AWS_DEFAULT_REGION') }}"

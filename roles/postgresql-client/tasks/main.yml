@@ -23,3 +23,13 @@
   apt:
     name: postgresql-client-{{ postgresql_client_version }}
     state: latest
+
+- name: Get RDS SSL certificate
+  get_url:
+    url: https://s3.amazonaws.com/rds-downloads/rds-ca-2015-root.pem
+    dest: /usr/local/share/ca-certificates/rds-ca-2015-root.crt
+  register: rds_ca_bundle_downloaded
+
+- name: Update CA certificates
+  command: "update-ca-certificates"
+  when: rds_ca_bundle_downloaded | changed
